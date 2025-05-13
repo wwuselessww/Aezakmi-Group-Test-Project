@@ -21,6 +21,7 @@ class RegistrationViewModel: ObservableObject {
         }
     }
     @Published var passwordError: String?
+    @Published var canProceed: Bool = true
     
     private var passwordValidationWorkItem: DispatchWorkItem?
     private var loginValidationWorkItem: DispatchWorkItem?
@@ -39,6 +40,11 @@ class RegistrationViewModel: ObservableObject {
         } else {
             loginError = nil
         }
+       if loginError == nil && passwordError == nil {
+           canProceed = true
+       } else {
+           canProceed = false
+       }
     }
     
     private func validatePassword() {
@@ -51,13 +57,19 @@ class RegistrationViewModel: ObservableObject {
         if passwordText.count > 20 {
             passwordError = "Password is too long"
         } else {
-            passwordError = nil 
+            passwordError = nil
         }
         let specialCharacterRegex = ".*[!@#$%^&*()_+=\\-\\[\\]{};':\"\\\\|,.<>/?]+.*"
         let specialCharTest = NSPredicate(format: "SELF MATCHES %@", specialCharacterRegex)
 
         if !specialCharTest.evaluate(with: passwordText) {
             passwordError = "Password must contain at least one special character"
+        }
+        
+        if loginError == nil && passwordError == nil {
+            canProceed = true
+        } else {
+            canProceed = false
         }
     }
     
