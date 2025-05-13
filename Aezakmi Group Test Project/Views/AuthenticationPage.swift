@@ -59,12 +59,6 @@ struct AuthenticationPage: View {
             Spacer()
 
         }
-        .onChange(of: vm.passwordText, { _, _ in
-            vm.validatePassword()
-        })
-        .onChange(of: vm.loginText, { _, _ in
-            vm.validateLogin()
-        })
         .padding(.horizontal)
     }
 }

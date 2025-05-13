@@ -12,7 +12,7 @@ struct DefaultButtonModifier: ViewModifier {
         content
             .frame(minWidth: 40, maxWidth: .infinity, minHeight: 40, maxHeight: 50)
             .background {
-                RoundedRectangle(cornerRadius: 5)
+                RoundedRectangle(cornerRadius: 16)
             }
     }
 }
