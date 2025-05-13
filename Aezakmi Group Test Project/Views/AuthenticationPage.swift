@@ -21,12 +21,13 @@ struct AuthenticationPage: View {
             AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
                 .padding(.bottom, 10)
             AuthTextfield(text: $vm.passwordText, errorText: $vm.passwordError, placeholder: "Enter password here", title: "Password", isSecure: true)
-            Button("Log in") {
-                print("login")
+            NavigationLink("Log in") {
+                MainPage()
             }
+            .disabled(vm.canProceed)
             .foregroundStyle(.white)
             .withDefaultButtonFormatting()
-            .disabled(!vm.canProceed)
+            
             .padding(.top, 20)
             
             Button {

@@ -41,9 +41,9 @@ class RegistrationViewModel: ObservableObject {
             loginError = nil
         }
        if loginError == nil && passwordError == nil {
-           canProceed = true
-       } else {
            canProceed = false
+       } else {
+           canProceed = true
        }
     }
     
@@ -67,9 +67,9 @@ class RegistrationViewModel: ObservableObject {
         }
         
         if loginError == nil && passwordError == nil {
-            canProceed = true
-        } else {
             canProceed = false
+        } else {
+            canProceed = true
         }
     }
     
