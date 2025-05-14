@@ -56,6 +56,27 @@ class AppViewModel: ObservableObject {
         }
     }
     
+    func resetPassword(email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error as NSError? {
+                switch AuthErrorCode(rawValue: error.code) {
+                case .userNotFound:
+                    print("No user found with this email.")
+                case .invalidRecipientEmail:
+                    print("Invalid recipient email.")
+                case .invalidSender:
+                    print("Invalid sender.")
+                case .invalidMessagePayload:
+                    print("Invalid message payload.")
+                default:
+                    print("Reset password error: \(error.localizedDescription)")
+                }
+            } else {
+                print("✅ Password reset email sent successfully.")
+            }
+        }
+    }
+    
     func signOut() {
         do {
             try Auth.auth().signOut()

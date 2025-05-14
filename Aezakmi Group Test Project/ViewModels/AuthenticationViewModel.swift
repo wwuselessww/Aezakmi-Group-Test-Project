@@ -25,7 +25,7 @@ class AuthenticationViewModel: ObservableObject {
     }
     @Published var passwordError: String? = ""
     @Published var canProceed: Bool = true
-    
+    @Published var showResetSheet: Bool = false
     private var passwordValidationWorkItem: DispatchWorkItem?
     private var loginValidationWorkItem: DispatchWorkItem?
     

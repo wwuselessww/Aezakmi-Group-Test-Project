@@ -16,21 +16,22 @@ struct AuthenticationPage: View {
     
     var body: some View {
         VStack {
-             Spacer()
-             Text ("Aezami Group Photos")
-                 .font(.system(size: 36))
+            Spacer()
+            Text ("Aezami Group Photos")
+                .font(.system(size: 36))
             Text(appVM.loginError ?? "none")
                 .foregroundStyle(appVM.loginError != nil ? .red : .clear)
-                 .padding(.bottom, 30)
-             Spacer()
-             AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
-                 .padding(.bottom, 10)
-             AuthTextfield(text: $vm.passwordText, errorText: $vm.passwordError, placeholder: "Enter password here", title: "Password", isSecure: true)
-             Button("Log in") {
-                 appVM.login(email: vm.loginText, password: vm.passwordText)
-             }
-             .foregroundStyle(.white)
-             .withDefaultButtonFormatting(disabled: $vm.canProceed)
+                .padding(.bottom, 30)
+            Spacer()
+            AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
+                .padding(.bottom, 10)
+            AuthTextfield(text: $vm.passwordText, errorText: $vm.passwordError, placeholder: "Enter password here", title: "Password", isSecure: true)
+                .padding(.bottom, 20)
+            Button("Log in") {
+                appVM.login(email: vm.loginText, password: vm.passwordText)
+            }
+            .foregroundStyle(.white)
+            .withDefaultButtonFormatting(disabled: $vm.canProceed)
             
             Button(action: {
                 vm.handleSignInGoogle()
@@ -42,40 +43,54 @@ struct AuthenticationPage: View {
                     Text("Continue with google")
                         .bold()
                         .foregroundStyle(.white)
-                        
+                    
                 }
             })
             .foregroundStyle(.white)
             .withDefaultButtonFormatting(disabled: .constant(false))
-
+            NavigationLink {
+                RegistrationPage()
+                    .environmentObject(appVM)
+            } label: {
+                HStack(spacing: 1.5) {
+                    Text("or ")
+                    Text("sign up")
+                        .overlay {
+                            Rectangle()
+                                .frame(height: 1.5)
+                                .offset(y:12)
+                        }
+                    
+                    Text(" with email")
+                }
+                
+                .foregroundStyle(.black)
+            }
             
-             .padding(.top, 20)
-             NavigationLink {
-                 RegistrationPage()
-                     .environmentObject(appVM)
-             } label: {
-                 HStack(spacing: 1.5) {
-                     Text("or ")
-                     Text("sign up")
-                         .overlay {
-                             Rectangle()
-                                 .frame(height: 1.5)
-                                 .offset(y:12)
-                         }
-                     
-                     Text(" with email")
-                 }
-                 
-                 .foregroundStyle(.black)
-             }
-             Spacer()
-
-         }
+            Button {
+                vm.showResetSheet.toggle()
+            } label: {
+                Text("reset password?")
+                    .foregroundStyle(.black)
+                
+            }
+            .sheet(isPresented: $vm.showResetSheet) {
+                ResetPassword()
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.medium])
+                    .environmentObject(appVM)
+            }
+            .padding(.top, 40)
+            
+            
+            Spacer()
+            
+        }
         .onAppear(perform: {
             appVM.loginError = nil
         })
-
-         .padding(.horizontal)
+        
+        .padding(.horizontal)
     }
 }
 #Preview {
