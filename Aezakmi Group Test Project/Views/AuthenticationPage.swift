@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseAuth
+import GoogleSignInSwift
+import GoogleSignIn
 
 struct AuthenticationPage: View {
     @EnvironmentObject var appVM: AppViewModel
@@ -27,10 +29,15 @@ struct AuthenticationPage: View {
              Button("Log in") {
                  appVM.login(email: vm.loginText, password: vm.passwordText)
              }
-//             .disabled(vm.canProceed)
              .foregroundStyle(.white)
              .withDefaultButtonFormatting(disabled: $vm.canProceed)
-             
+            
+            Button("Sign In With Google") {
+                vm.handleSignInGoogle()
+            }
+            .foregroundStyle(.white)
+            .withDefaultButtonFormatting(disabled: .constant(false))
+            
              .padding(.top, 20)
              NavigationLink {
                  RegistrationPage()

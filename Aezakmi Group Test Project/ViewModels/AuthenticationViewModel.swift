@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseAuth
+import Firebase
+import GoogleSignIn
 
 class AuthenticationViewModel: ObservableObject {
     @Published var loginText: String = "" {
@@ -72,6 +74,38 @@ class AuthenticationViewModel: ObservableObject {
         } else {
             canProceed = true
         }
+    }
+    
+    func handleSignInGoogle() {
+        
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let rootVC = scene.windows.first?.rootViewController else {
+            print("no vc")
+            return
+        }
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            return
+        }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        
+        
+        GIDSignIn.sharedInstance.signIn(
+            withPresenting: rootVC) { signInResult, error in
+                guard let result = signInResult else {
+                    // Inspect error
+                    return
+                }
+                // If sign in succeeded, display the app's main content View.
+                guard let user = signInResult?.user, let idToken = user.idToken else {return}
+                let accessToken =  user.accessToken
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
+                print(result.user.profile?.name)
+                Auth.auth().signIn(with: credential) {result, error in
+                    if error == nil {
+                        print("google\n \(error?.localizedDescription)")
+                    }
+                }
+            }
     }
     
     private func debounceLoginValidation() {

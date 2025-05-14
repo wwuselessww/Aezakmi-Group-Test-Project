@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import GoogleSignIn
 
 struct ContentView: View {
     @ObservedObject var vm = AppViewModel()
@@ -22,6 +23,9 @@ struct ContentView: View {
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }
         }
+        .onOpenURL(perform: { url in
+            GIDSignIn.sharedInstance.handle(url)
+        })
         .animation(.easeInOut(duration: 0.3), value: vm.isUserLoggedIn)
     }
 }

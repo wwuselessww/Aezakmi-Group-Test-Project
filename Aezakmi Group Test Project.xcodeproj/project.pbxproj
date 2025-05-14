@@ -8,15 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		A2D54E462DD3D942008E07D3 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A2D54E452DD3D942008E07D3 /* FirebaseAuth */; };
+		A2D6E78C2DD4F37C00A31F46 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A2D6E78B2DD4F37C00A31F46 /* GoogleSignIn */; };
+		A2D6E78E2DD4F37C00A31F46 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2D6E78D2DD4F37C00A31F46 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A2D54E142DD3A7A0008E07D3 /* Aezakmi Group Test Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aezakmi Group Test Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A2D6E7902DD5030000A31F46 /* Exceptions for "Aezakmi Group Test Project" folder in "Aezakmi Group Test Project" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Aezakmi-Group-Test-Project-Info.plist",
+			);
+			target = A2D54E132DD3A7A0008E07D3 /* Aezakmi Group Test Project */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A2D54E162DD3A7A0008E07D3 /* Aezakmi Group Test Project */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A2D6E7902DD5030000A31F46 /* Exceptions for "Aezakmi Group Test Project" folder in "Aezakmi Group Test Project" target */,
+			);
 			path = "Aezakmi Group Test Project";
 			sourceTree = "<group>";
 		};
@@ -27,7 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2D6E78E2DD4F37C00A31F46 /* GoogleSignInSwift in Frameworks */,
 				A2D54E462DD3D942008E07D3 /* FirebaseAuth in Frameworks */,
+				A2D6E78C2DD4F37C00A31F46 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +88,8 @@
 			name = "Aezakmi Group Test Project";
 			packageProductDependencies = (
 				A2D54E452DD3D942008E07D3 /* FirebaseAuth */,
+				A2D6E78B2DD4F37C00A31F46 /* GoogleSignIn */,
+				A2D6E78D2DD4F37C00A31F46 /* GoogleSignInSwift */,
 			);
 			productName = "Aezakmi Group Test Project";
 			productReference = A2D54E142DD3A7A0008E07D3 /* Aezakmi Group Test Project.app */;
@@ -102,6 +121,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A2D54E442DD3D942008E07D3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A2D6E78A2DD4F37C00A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A2D54E152DD3A7A0008E07D3 /* Products */;
@@ -265,6 +285,7 @@
 				DEVELOPMENT_TEAM = VFG5U3NL5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aezakmi-Group-Test-Project-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -294,6 +315,7 @@
 				DEVELOPMENT_TEAM = VFG5U3NL5K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aezakmi-Group-Test-Project-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -345,6 +367,14 @@
 				minimumVersion = 11.12.0;
 			};
 		};
+		A2D6E78A2DD4F37C00A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -352,6 +382,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A2D54E442DD3D942008E07D3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		A2D6E78B2DD4F37C00A31F46 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2D6E78A2DD4F37C00A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A2D6E78D2DD4F37C00A31F46 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2D6E78A2DD4F37C00A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
