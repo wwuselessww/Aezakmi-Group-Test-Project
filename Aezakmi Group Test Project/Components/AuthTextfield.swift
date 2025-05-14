@@ -16,7 +16,7 @@ struct AuthTextfield: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
-                .foregroundStyle(errorText != nil ? .red: .black)
+                .foregroundStyle(errorText != nil && errorText != "" ? .red: .black)
             Group {
                 if isSecure {
                     SecureField(placeholder, text: $text)
@@ -28,7 +28,7 @@ struct AuthTextfield: View {
                 .background {
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(lineWidth: 2)
-                        .foregroundStyle(errorText != nil ? .red: .gray)
+                        .foregroundStyle(errorText != nil && errorText != "" ? .red: .gray)
                 }
                 .frame(minWidth: 200, maxWidth: 360, minHeight: 40, maxHeight: 48)
 //            if let error = errorText {

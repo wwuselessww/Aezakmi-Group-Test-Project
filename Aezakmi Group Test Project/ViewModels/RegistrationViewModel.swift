@@ -13,22 +13,23 @@ class RegistrationViewModel: ObservableObject {
             debounceEmail()
         }
     }
-    @Published var emailError: String?
+    @Published var emailError: String? = ""
     
     @Published var passwordText: String = "" {
         didSet {
             debouncePassword()
         }
     }
-    @Published var passwordError: String?
+    @Published var passwordError: String? = ""
     
     @Published var confirmPasswordText: String = "" {
         didSet {
             debounceConfirmPassword()
+            debouncePassword()
         }
     }
-    @Published var confirmPasswordError: String?
-    @Published var canProceed: Bool = false
+    @Published var confirmPasswordError: String? = ""
+    @Published var canProceed: Bool = true
     
     private var emailWorkItem: DispatchWorkItem?
     private var passwordWorkItem: DispatchWorkItem?

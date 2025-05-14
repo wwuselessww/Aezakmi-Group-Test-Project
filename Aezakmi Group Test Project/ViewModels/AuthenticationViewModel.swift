@@ -14,16 +14,16 @@ class AuthenticationViewModel: ObservableObject {
             debounceLoginValidation()
         }
     }
-    @Published var loginError: String?
+    @Published var loginError: String? = ""
     
     @Published var passwordText: String = "" {
         didSet {
             debouncePasswordValidation()
         }
     }
-    @Published var passwordError: String?
+    @Published var passwordError: String? = ""
     @Published var canProceed: Bool = true
-    //    @Published var isUserLogIn: Bool = false
+    
     private var passwordValidationWorkItem: DispatchWorkItem?
     private var loginValidationWorkItem: DispatchWorkItem?
     

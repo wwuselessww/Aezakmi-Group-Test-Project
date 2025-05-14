@@ -10,13 +10,15 @@ import FirebaseAuth
 
 struct AuthenticationPage: View {
     @EnvironmentObject var appVM: AppViewModel
-    @ObservedObject var vm: AuthenticationViewModel = AuthenticationViewModel()
+    @StateObject var vm: AuthenticationViewModel = AuthenticationViewModel()
     
     var body: some View {
         VStack {
              Spacer()
              Text ("Aezami Group Photos")
                  .font(.system(size: 36))
+            Text(appVM.loginError ?? "none")
+                .foregroundStyle(appVM.loginError != nil ? .red : .clear)
                  .padding(.bottom, 30)
              Spacer()
              AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
@@ -25,21 +27,11 @@ struct AuthenticationPage: View {
              Button("Log in") {
                  appVM.login(email: vm.loginText, password: vm.passwordText)
              }
-             .disabled(vm.canProceed)
+//             .disabled(vm.canProceed)
              .foregroundStyle(.white)
-             .withDefaultButtonFormatting()
+             .withDefaultButtonFormatting(disabled: $vm.canProceed)
              
              .padding(.top, 20)
-             
-//             Button {
-//                 appVM.register(email: vm.loginText, password: vm.passwordText)
-//             } label: {
-//                 Text("Register")
-//                     .fontWeight(.bold)
-//                     .foregroundStyle(.white)
-//             }
-//            
-//             .withDefaultButtonFormatting()
              NavigationLink {
                  RegistrationPage()
                      .environmentObject(appVM)
@@ -61,6 +53,9 @@ struct AuthenticationPage: View {
              Spacer()
 
          }
+        .onAppear(perform: {
+            appVM.loginError = nil
+        })
 
          .padding(.horizontal)
     }

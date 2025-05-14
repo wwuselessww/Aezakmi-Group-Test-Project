@@ -8,18 +8,21 @@
 import SwiftUI
 
 struct DefaultButtonModifier: ViewModifier {
+    @Binding var disabled: Bool
     func body(content: Content) -> some View {
         content
             .frame(minWidth: 40, maxWidth: .infinity, minHeight: 40, maxHeight: 50)
+            .disabled(disabled)
             .background {
                 RoundedRectangle(cornerRadius: 16)
+                    .foregroundStyle(disabled ? .gray : .black)
             }
     }
 }
 
 extension View {
-    func withDefaultButtonFormatting() -> some View {
-        modifier(DefaultButtonModifier())
+    func withDefaultButtonFormatting(disabled: Binding<Bool>) -> some View {
+        modifier(DefaultButtonModifier(disabled: disabled))
     }
 }
 
@@ -31,7 +34,7 @@ extension View {
         Text("sss")
             .foregroundStyle(.white)
     }
-    .withDefaultButtonFormatting()
+    .withDefaultButtonFormatting(disabled: .constant(true ))
     .padding(.horizontal)
 
 })

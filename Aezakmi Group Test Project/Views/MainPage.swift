@@ -20,7 +20,7 @@ struct MainPage:View {
                     .bold()
                     .foregroundStyle(.white)
             }
-            .withDefaultButtonFormatting()
+            .withDefaultButtonFormatting(disabled: .constant(false))
             .padding()
 
         }

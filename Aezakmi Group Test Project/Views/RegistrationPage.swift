@@ -9,14 +9,18 @@ import SwiftUI
 
 struct RegistrationPage: View {
     @EnvironmentObject var appVM: AppViewModel
-    @ObservedObject var vm = RegistrationViewModel()
+    @StateObject var vm = RegistrationViewModel()
     
     var body: some View {
         VStack {
             Spacer()
             Text ("Aezami Group Photos")
+            
                 .font(.system(size: 36))
+            Text(appVM.loginError ?? "none")
+                .foregroundStyle(appVM.loginError != nil ? .red : .clear)
                 .padding(.bottom, 30)
+            
             Spacer()
             AuthTextfield(text: $vm.emailText, errorText: $vm.emailError, placeholder: "Enter email here", title: "Email", isSecure: false)
                 .padding(.bottom, 10)
@@ -26,15 +30,19 @@ struct RegistrationPage: View {
             Button("Registration") {
                 appVM.register(email: vm.emailText, password: vm.passwordText)
             }
-            .disabled(vm.canProceed)
+//            .disabled(vm.canProceed)
             .foregroundStyle(.white)
-            .withDefaultButtonFormatting()
+            .withDefaultButtonFormatting(disabled: $vm.canProceed)
             .padding(.top, 20)
             Spacer()
 
         }
         .padding(.horizontal)
+        .onAppear(perform: {
+            appVM.loginError = nil
+        })
     }
+    
 }
 #Preview {
     RegistrationPage()
