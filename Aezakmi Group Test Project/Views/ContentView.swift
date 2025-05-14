@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
+    @ObservedObject var vm = AppViewModel()
     var body: some View {
         ZStack {
-            AuthenticationPage()
+            if vm.isUserLoggedIn {
+                MainPage()
+                    .environmentObject(vm)
+                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+            } else {
+                AuthenticationPage()
+                    .environmentObject(vm)
+                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
+            }
         }
+        .animation(.easeInOut(duration: 0.3), value: vm.isUserLoggedIn)
     }
 }
 

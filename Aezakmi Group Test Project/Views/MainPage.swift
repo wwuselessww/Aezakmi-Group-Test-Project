@@ -6,12 +6,27 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct MainPage:View {
+    @EnvironmentObject var appVM: AppViewModel
     var body: some View {
-        Text("Main page")
+        VStack {
+            Text("\(Auth.auth().currentUser?.uid)")
+            Button {
+                appVM.signOut()
+            } label: {
+                Text("Sign out")
+                    .bold()
+                    .foregroundStyle(.white)
+            }
+            .withDefaultButtonFormatting()
+            .padding()
+
+        }
     }
 }
 #Preview {
     MainPage()
+        .environmentObject(AppViewModel())
 }

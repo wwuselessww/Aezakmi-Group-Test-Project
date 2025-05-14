@@ -6,64 +6,68 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct AuthenticationPage: View {
-    
-    @ObservedObject var vm: RegistrationViewModel = RegistrationViewModel()
+    @EnvironmentObject var appVM: AppViewModel
+    @ObservedObject var vm: AuthenticationViewModel = AuthenticationViewModel()
     
     var body: some View {
         VStack {
-            Spacer()
-            Text ("Aezami Group Photos")
-                .font(.system(size: 36))
-                .padding(.bottom, 30)
-            Spacer()
-            AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
-                .padding(.bottom, 10)
-            AuthTextfield(text: $vm.passwordText, errorText: $vm.passwordError, placeholder: "Enter password here", title: "Password", isSecure: true)
-            NavigationLink("Log in") {
-                MainPage()
-            }
-            .disabled(vm.canProceed)
-            .foregroundStyle(.white)
-            .withDefaultButtonFormatting()
-            
-            .padding(.top, 20)
-            
-            Button {
-                print("google")
-            } label: {
-                Text("Google")
-                    .fontWeight(.bold)
-                    .foregroundStyle(.white)
-            }
-           
-            .withDefaultButtonFormatting()
-            NavigationLink {
-                RegistrationPage()
-            } label: {
-                HStack(spacing: 1.5) {
-                    Text("or ")
-                    Text("sign up")
-                        .overlay {
-                            Rectangle()
-                                .frame(height: 1.5)
-                                .offset(y:12)
-                        }
-                    
-                    Text(" with email")
-                }
-                
-                .foregroundStyle(.black)
-            }
-            Spacer()
+             Spacer()
+             Text ("Aezami Group Photos")
+                 .font(.system(size: 36))
+                 .padding(.bottom, 30)
+             Spacer()
+             AuthTextfield(text: $vm.loginText, errorText: $vm.loginError, placeholder: "Enter email here", title: "Email", isSecure: false)
+                 .padding(.bottom, 10)
+             AuthTextfield(text: $vm.passwordText, errorText: $vm.passwordError, placeholder: "Enter password here", title: "Password", isSecure: true)
+             Button("Log in") {
+                 appVM.login(email: vm.loginText, password: vm.passwordText)
+             }
+             .disabled(vm.canProceed)
+             .foregroundStyle(.white)
+             .withDefaultButtonFormatting()
+             
+             .padding(.top, 20)
+             
+//             Button {
+//                 appVM.register(email: vm.loginText, password: vm.passwordText)
+//             } label: {
+//                 Text("Register")
+//                     .fontWeight(.bold)
+//                     .foregroundStyle(.white)
+//             }
+//            
+//             .withDefaultButtonFormatting()
+             NavigationLink {
+                 RegistrationPage()
+                     .environmentObject(appVM)
+             } label: {
+                 HStack(spacing: 1.5) {
+                     Text("or ")
+                     Text("sign up")
+                         .overlay {
+                             Rectangle()
+                                 .frame(height: 1.5)
+                                 .offset(y:12)
+                         }
+                     
+                     Text(" with email")
+                 }
+                 
+                 .foregroundStyle(.black)
+             }
+             Spacer()
 
-        }
-        .padding(.horizontal)
+         }
+
+         .padding(.horizontal)
     }
 }
 #Preview {
     NavigationStack {
         AuthenticationPage()
+            .environmentObject(AppViewModel())
     }
 }
