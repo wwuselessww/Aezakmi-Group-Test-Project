@@ -32,11 +32,22 @@ struct AuthenticationPage: View {
              .foregroundStyle(.white)
              .withDefaultButtonFormatting(disabled: $vm.canProceed)
             
-            Button("Sign In With Google") {
+            Button(action: {
                 vm.handleSignInGoogle()
-            }
+            }, label: {
+                HStack {
+                    Image(.googlelogo)
+                        .resizable()
+                        .scaledToFit()
+                    Text("Continue with google")
+                        .bold()
+                        .foregroundStyle(.white)
+                        
+                }
+            })
             .foregroundStyle(.white)
             .withDefaultButtonFormatting(disabled: .constant(false))
+
             
              .padding(.top, 20)
              NavigationLink {
