@@ -16,22 +16,9 @@
 		A2D54E142DD3A7A0008E07D3 /* Aezakmi Group Test Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Aezakmi Group Test Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A2D6E7C62DD51F6000A31F46 /* Exceptions for "Aezakmi Group Test Project" folder in "Aezakmi Group Test Project" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Aezakmi-Group-Test-Project-Info.plist",
-			);
-			target = A2D54E132DD3A7A0008E07D3 /* Aezakmi Group Test Project */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A2D54E162DD3A7A0008E07D3 /* Aezakmi Group Test Project */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				A2D6E7C62DD51F6000A31F46 /* Exceptions for "Aezakmi Group Test Project" folder in "Aezakmi Group Test Project" target */,
-			);
 			path = "Aezakmi Group Test Project";
 			sourceTree = "<group>";
 		};
