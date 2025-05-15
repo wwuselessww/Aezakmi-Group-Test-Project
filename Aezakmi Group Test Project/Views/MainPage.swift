@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseAuth
 import PhotosUI
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 struct MainPage:View {
     @EnvironmentObject var appVM: AppViewModel
@@ -41,7 +43,8 @@ struct MainPage:View {
                     print("draw")
                 }
                 PhotoEditButton(systemImage: "camera.filters", title: "filtes", disable: .constant(false)) {
-                    print("filtes")
+                    vm.didTapFiltersBtn.toggle()
+                    vm.getImage()
                 }
                 PhotoEditButton(systemImage: "square.and.arrow.down", title: "save", disable: .constant(false)) {
                     print("save")
