@@ -38,13 +38,40 @@ struct MainPage:View {
             }
             
             Spacer()
+            if vm.didTapFiltersBtn {
+                Slider(value: $vm.filterIntensity)
+                    .onChange(of: vm.filterIntensity) { _, newValue in
+                        vm.applyProccesing()
+                    }
+                HStack {
+                    ForEach(vm.filtersArray) { filter in
+                        
+                            Button {
+                                vm.setFilter(filter.filter)
+                                vm.getImage()
+                            } label: {
+                                VStack {
+                                    Text(filter.name)
+                                        .bold()
+                                        .foregroundStyle(.white)
+                                        .withDefaultButtonFormatting(disabled: .constant(false))
+                                }
+                                .foregroundStyle(.black)
+                            }
+
+                        
+                    }
+                }
+            }
             HStack(spacing: 30) {
                 PhotoEditButton(systemImage: "pencil", title: "draw", disable: .constant(false)) {
                     print("draw")
                 }
                 PhotoEditButton(systemImage: "camera.filters", title: "filtes", disable: .constant(false)) {
-                    vm.didTapFiltersBtn.toggle()
-                    vm.getImage()
+                    withAnimation {
+                        vm.didTapFiltersBtn.toggle()
+                    }
+//                    vm.getImage()
                 }
                 PhotoEditButton(systemImage: "square.and.arrow.down", title: "save", disable: .constant(false)) {
                     print("save")
