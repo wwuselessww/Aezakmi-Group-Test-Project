@@ -14,44 +14,50 @@ struct MainPage:View {
     @StateObject var vm = MainPageViewModel()
     
     var body: some View {
-        VStack {
-//            Text("\(Auth.auth().currentUser?.uid)")
-//            Button {
-//                appVM.signOut()
-//            } label: {
-//                Text("Sign out")
-//                    .bold()
-//                    .foregroundStyle(.white)
+//        VStack {
+//            if let image = vm.image {
+//                image
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(minWidth: 50, maxWidth: 300, minHeight: 50, maxHeight: 300)
+//            } else {
+//                Image(systemName: "photo.artframe")
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(minWidth: 50, maxWidth: 100)
 //            }
-//            .withDefaultButtonFormatting(disabled: .constant(false))
-//            .padding()
-            if let image = vm.image {
-                image
+//            PhotosPicker("Select Photo For Edit", selection: $vm.selectedPhoto, matching: .images)
+//                .foregroundStyle(.white)
+//                .bold()
+//                .withDefaultButtonFormatting(disabled: .constant(false))
+//
+//        }
+//        .padding(.horizontal)
+//        .onChange(of: vm.selectedPhoto) { oldValue, newValue in
+//            Task {
+//                do {
+//                    let loaded = try await vm.selectedPhoto?.loadTransferable(type: Image.self)
+//                        vm.image = loaded
+//                } catch {
+//                    print(error.localizedDescription)
+//                }
+//            }
+//        }
+        VStack {
+            if let selection = vm.selection {
+                Image(uiImage: selection)
                     .resizable()
                     .scaledToFit()
-                    .frame(minWidth: 50, maxWidth: 300, minHeight: 50, maxHeight: 300)
-            } else {
-                Image(systemName: "photo.artframe")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(minWidth: 50, maxWidth: 100)
             }
-            PhotosPicker("Select Photo For Edit", selection: $vm.selectedPhoto, matching: .images)
-                .foregroundStyle(.white)
-                .bold()
-                .withDefaultButtonFormatting(disabled: .constant(false))
+            CroppedPhotosPicker(style: .default, options: vm.cropOptions, selection: $vm.selection) { rect in
+                print("did Crop to rect \(rect)")
+            } didCancel: {
+                print("did cancel")
+            } label: {
+                Text("Picke and crop Image")
+            }
 
-        }
-        .padding(.horizontal)
-        .onChange(of: vm.selectedPhoto) { oldValue, newValue in
-            Task {
-                do {
-                    let loaded = try await vm.selectedPhoto?.loadTransferable(type: Image.self)
-                        vm.image = loaded
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
+            
         }
     }
 }

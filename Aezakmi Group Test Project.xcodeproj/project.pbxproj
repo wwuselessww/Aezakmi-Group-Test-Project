@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A26E292A2DD5FDF80086FB59 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = A26E29292DD5FDF80086FB59 /* CropViewController */; };
+		A26E292C2DD5FDF80086FB59 /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = A26E292B2DD5FDF80086FB59 /* TOCropViewController */; };
 		A2D6E7BD2DD51E9600A31F46 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A2D6E7BC2DD51E9600A31F46 /* GoogleSignIn */; };
 		A2D6E7BF2DD51E9600A31F46 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A2D6E7BE2DD51E9600A31F46 /* GoogleSignInSwift */; };
 		A2D6E7C22DD51EE900A31F46 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A2D6E7C12DD51EE900A31F46 /* FirebaseAuth */; };
@@ -30,6 +32,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2D6E7BD2DD51E9600A31F46 /* GoogleSignIn in Frameworks */,
+				A26E292C2DD5FDF80086FB59 /* TOCropViewController in Frameworks */,
+				A26E292A2DD5FDF80086FB59 /* CropViewController in Frameworks */,
 				A2D6E7C22DD51EE900A31F46 /* FirebaseAuth in Frameworks */,
 				A2D6E7BF2DD51E9600A31F46 /* GoogleSignInSwift in Frameworks */,
 			);
@@ -77,6 +81,8 @@
 				A2D6E7BC2DD51E9600A31F46 /* GoogleSignIn */,
 				A2D6E7BE2DD51E9600A31F46 /* GoogleSignInSwift */,
 				A2D6E7C12DD51EE900A31F46 /* FirebaseAuth */,
+				A26E29292DD5FDF80086FB59 /* CropViewController */,
+				A26E292B2DD5FDF80086FB59 /* TOCropViewController */,
 			);
 			productName = "Aezakmi Group Test Project";
 			productReference = A2D54E142DD3A7A0008E07D3 /* Aezakmi Group Test Project.app */;
@@ -109,6 +115,7 @@
 			packageReferences = (
 				A2D6E7BB2DD51E9600A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				A2D6E7C02DD51EE900A31F46 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A26E29282DD5FDF80086FB59 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A2D54E152DD3A7A0008E07D3 /* Products */;
@@ -346,6 +353,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A26E29282DD5FDF80086FB59 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.4;
+			};
+		};
 		A2D6E7BB2DD51E9600A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -365,6 +380,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A26E29292DD5FDF80086FB59 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A26E29282DD5FDF80086FB59 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		A26E292B2DD5FDF80086FB59 /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A26E29282DD5FDF80086FB59 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
+		};
 		A2D6E7BC2DD51E9600A31F46 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A2D6E7BB2DD51E9600A31F46 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
