@@ -119,8 +119,22 @@ struct MainPage:View {
                     vm.saveImage()
                 }
                 
-                PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
-                    print("share")
+//                PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
+//                    print("share")
+//                }
+                if let image = vm.selection {
+                    ShareLink(item: Image(uiImage: image), preview: SharePreview("Eddited Image", image: Image(uiImage: image))) {
+                        VStack {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundStyle(.white)
+                                .withDefaultButtonFormatting(disabled: .constant(false))
+                                .frame(width: 40, height: 40)
+                            Text("Share")
+                                .foregroundStyle(.black)
+                                .bold()
+
+                        }
+                    }
                 }
             }
             CroppedPhotosPicker(style: .default, options: vm.cropOptions, selection: $vm.selection) { rect in

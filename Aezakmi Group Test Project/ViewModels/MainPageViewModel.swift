@@ -34,7 +34,6 @@ class MainPageViewModel: ObservableObject {
     @Published var text: String = ""
     @Published var textColor: Color = .red
     @Published var textFontSize: Int = 10
-    
     let context = CIContext()
     
     @MainActor
@@ -102,7 +101,7 @@ class MainPageViewModel: ObservableObject {
                 selection = combinedImage
         }
     }
-    
+    @MainActor
     func addTextToImage(viewSize: CGSize) {
         guard let baseImage = selection else { return }
 
