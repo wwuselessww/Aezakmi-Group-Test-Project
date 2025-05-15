@@ -29,20 +29,22 @@ struct MainPage:View {
             }
             Spacer()
             if !vm.didTapDrawBtn {
-                Group {
                     if let selection = vm.selection {
                         GeometryReader { geo in
                             Image(uiImage: selection)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(minWidth: 200, maxWidth: .infinity)
+                                
                                 .onTapGesture { location in
                                     print(location)
                                     vm.textLocation = location
                                 }
                                 .onChange(of: vm.didTapAddTextBtn) { oldValue, newValue in
-                                    vm.addTextToImage(viewSize: geo.size)
+                                    if newValue == false {
+                                        vm.addTextToImage(viewSize: geo.size)
+                                    }
                                 }
+                                .frame(minWidth: 200, maxWidth: 400, minHeight: 200, maxHeight: 400)
                         }
                     } else {
                         VStack {
@@ -54,7 +56,7 @@ struct MainPage:View {
                                 .bold()
                         }
                     }
-                }
+
                 
             } else {
                 if let image = vm.selection {
@@ -63,7 +65,7 @@ struct MainPage:View {
                     }
                     
                 } else {
-                    Text("NO IMAGE")
+                    Text("No image was selected")
                 }
             }
             
@@ -90,6 +92,8 @@ struct MainPage:View {
                         }
                     }
                 }
+            } else if vm.didTapAddTextBtn {
+                TextEditor(text: $vm.text, textColor: $vm.textColor, selectedFontSize: $vm.textFontSize)
             }
             HStack(spacing: 30) {
                 PhotoEditButton(systemImage: "pencil", title: "draw", disable: .constant(false)) {
