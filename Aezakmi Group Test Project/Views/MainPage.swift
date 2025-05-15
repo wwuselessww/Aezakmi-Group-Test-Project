@@ -10,6 +10,7 @@ import FirebaseAuth
 import PhotosUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import PencilKit
 
 struct MainPage:View {
     @EnvironmentObject var appVM: AppViewModel
@@ -19,21 +20,40 @@ struct MainPage:View {
 
         VStack {
             Spacer()
-            Group {
-                if let selection = vm.selection {
-                    Image(uiImage: selection)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(minWidth: 200, maxWidth: .infinity)
-                } else {
-                    VStack {
-                        Image(systemName: "photo.artframe")
+            if !vm.didTapDrawBtn {
+                Group {
+                    if let selection = vm.selection {
+                        Image(uiImage: selection)
                             .resizable()
                             .scaledToFit()
-                            .frame(minWidth: 100, maxWidth: 200)
-                        Text("Image isnt selected")
-                    }
+                            .frame(minWidth: 200, maxWidth: .infinity)
+                    } else {
+                        VStack {
+                            Image(systemName: "photo.artframe")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(minWidth: 100, maxWidth: 200)
+                            Text("Image isnt selected")
+                        }
                         
+                            
+                    }
+                }
+            } else {
+                if let image = vm.selection {
+                    ZStack {
+                        CanvasView(canvasView: $vm.canvasView, backgroundImage: image)
+                            .shadow(radius: 20)
+                        Text("TEXT HERE")
+                            .bold()
+                            .foregroundStyle(.red)
+                            .background(Color.white.opacity(0.5))
+                            .position(x: 150, y: 150)
+                           
+                    }
+
+                } else {
+                    Text("NO IMAGE")
                 }
             }
             
@@ -66,6 +86,7 @@ struct MainPage:View {
             HStack(spacing: 30) {
                 PhotoEditButton(systemImage: "pencil", title: "draw", disable: .constant(false)) {
                     print("draw")
+                    vm.didTapDrawBtn.toggle()
                 }
                 PhotoEditButton(systemImage: "camera.filters", title: "filtes", disable: .constant(false)) {
                     withAnimation {
@@ -94,6 +115,16 @@ struct MainPage:View {
 
             
         }
+//        .onChange(of: vm.didTapDrawBtn) { oldValue, newValue in
+//            if oldValue == false {
+//                vm.selection = vm.renderFinalImage(
+//                    baseImage: vm.selection!,
+//                    canvasView: vm.canvasView,
+//                    text: "TEST",
+//                    at: CGPoint(x: 150, y: 150)
+//                )
+//            }
+//        }
         .padding()
     }
 }

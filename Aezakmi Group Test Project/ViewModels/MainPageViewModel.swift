@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import PencilKit
 
 class MainPageViewModel: ObservableObject {
     @Published var selection: UIImage?
@@ -21,6 +22,8 @@ class MainPageViewModel: ObservableObject {
     ]
     
     @Published var didTapFiltersBtn: Bool = false
+    @Published var didTapDrawBtn: Bool = false
+    @Published var canvasView = PKCanvasView()
     @Published var currentFilter: CIFilter = CIFilter.sepiaTone()
     let context = CIContext()
     @Published var filterIntensity = 0.0
@@ -57,35 +60,14 @@ class MainPageViewModel: ObservableObject {
         }
     }
     
-    @MainActor
-    func applyTestProccesing() {
-//        currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)
-        let intensity = 0.5
-        let inputKeys = currentFilter.inputKeys
-        if inputKeys.contains(kCIInputIntensityKey) {
-            currentFilter.setValue(intensity, forKey: kCIInputIntensityKey)
-        }
-        if inputKeys.contains(kCIInputRadiusKey) {
-            currentFilter.setValue(intensity * 200, forKey: kCIInputRadiusKey)
-        }
-        if inputKeys.contains(kCIInputScaleKey) {
-            currentFilter.setValue(intensity, forKey: kCIInputScaleKey)
-        }
-        
-        
-        guard let outputImage = currentFilter.outputImage else {return}
-        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {return}
-        
-        let uiImage = UIImage(cgImage: cgImage)
-        selection = uiImage
-        print("hehe")
-    }
-    
     
     func setFilter(_ filter: CIFilter) {
         currentFilter = filter
         getImage()
     }
+    
+
+    
 }
 
 struct Filter: Identifiable {
