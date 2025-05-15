@@ -10,6 +10,7 @@ import PhotosUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import PencilKit
+import CoreGraphics
 
 class MainPageViewModel: ObservableObject {
     
@@ -23,10 +24,14 @@ class MainPageViewModel: ObservableObject {
     @Published var selection: UIImage?
     @Published var userFeedbackText: ImageSavingFeedback?
     @Published var didTapFiltersBtn: Bool = false
+    @Published var didTapAddTextBtn: Bool = false
     @Published var didTapDrawBtn: Bool = false
     @Published var canvasView = PKCanvasView()
     @Published var currentFilter: CIFilter = CIFilter.sepiaTone()
     @Published var filterIntensity = 0.0
+    @Published var zoom: Double = 0.0
+    @Published var totalZoom: Double = 0.0
+    @Published var textLocation: CGPoint = .zero
     
     let context = CIContext()
     
@@ -92,20 +97,50 @@ class MainPageViewModel: ObservableObject {
         UIGraphicsEndImageContext()
 
         if let combinedImage {
-//            Task {
                 selection = combinedImage
-//            }
         }
     }
     
+    func addTextToImage(viewSize: CGSize) {
+        guard let baseImage = selection else { return }
+
+        let renderer = UIGraphicsImageRenderer(size: baseImage.size)
+        let image = renderer.image { ctx in
+            baseImage.draw(in: CGRect(origin: .zero, size: baseImage.size))
+
+            // Convert from view space to image space
+            let scaleX = baseImage.size.width / viewSize.width
+            let scaleY = baseImage.size.height / viewSize.height
+            let imagePoint = CGPoint(x: textLocation.x * scaleX, y: textLocation.y * scaleY)
+
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 64),
+                .paragraphStyle: paragraphStyle,
+                .foregroundColor: UIColor.black
+            ]
+
+            let string = "lkjanlkjnasdflkjnaflkjnadlfkjanflkjnfdl \n jnalsdkjnasldknjad"
+            let attributedString = NSAttributedString(string: string, attributes: attrs)
+
+            attributedString.draw(
+                with: CGRect(origin: imagePoint, size: CGSize(width: 600, height: 300)),
+                options: .usesLineFragmentOrigin,
+                context: nil
+            )
+        }
+
+        Task {
+            selection = image
+        }
+    }
     
     func setFilter(_ filter: CIFilter) {
         currentFilter = filter
         getImage()
     }
-    
-
-    
 }
 
 struct Filter: Identifiable {

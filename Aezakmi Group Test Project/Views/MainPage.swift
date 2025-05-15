@@ -31,10 +31,19 @@ struct MainPage:View {
             if !vm.didTapDrawBtn {
                 Group {
                     if let selection = vm.selection {
-                        Image(uiImage: selection)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(minWidth: 200, maxWidth: .infinity)
+                        GeometryReader { geo in
+                            Image(uiImage: selection)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(minWidth: 200, maxWidth: .infinity)
+                                .onTapGesture { location in
+                                    print(location)
+                                    vm.textLocation = location
+                                }
+                                .onChange(of: vm.didTapAddTextBtn) { oldValue, newValue in
+                                    vm.addTextToImage(viewSize: geo.size)
+                                }
+                        }
                     } else {
                         VStack {
                             Image(systemName: "photo.artframe")
@@ -46,16 +55,10 @@ struct MainPage:View {
                         }
                     }
                 }
+                
             } else {
                 if let image = vm.selection {
                     ZStack {
-//                        CanvasView(canvasView: $vm.canvasView, backgroundImage: image)
-//                            .shadow(radius: 20)
-//                        Text("TEXT HERE")
-//                            .bold()
-//                            .foregroundStyle(.red)
-//                            .background(Color.white.opacity(0.5))
-//                            .position(x: 150, y: 150)
                         CanvasView(canvasView: $vm.canvasView, backgroundImage: image)
                     }
                     
@@ -93,16 +96,25 @@ struct MainPage:View {
                     print("draw")
                     vm.didTapDrawBtn.toggle()
                 }
+                
+                PhotoEditButton(systemImage: "textformat.size", title: "Text", disable: .constant(false)) {
+                    withAnimation {
+                        vm.didTapAddTextBtn.toggle()
+                        //                        vm.addTextToImage()
+                    }
+                }
+                
                 PhotoEditButton(systemImage: "camera.filters", title: "filtes", disable: .constant(false)) {
                     withAnimation {
                         vm.didTapFiltersBtn.toggle()
                     }
-                    //                    vm.getImage()
                 }
+                
                 PhotoEditButton(systemImage: "square.and.arrow.down", title: "save", disable: .constant(false)) {
                     print("save")
                     vm.saveImage()
                 }
+                
                 PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
                     print("share")
                 }
