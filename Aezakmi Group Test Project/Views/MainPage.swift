@@ -17,8 +17,16 @@ struct MainPage:View {
     @StateObject var vm = MainPageViewModel()
     
     var body: some View {
-
+        
         VStack {
+            if let feedback = vm.userFeedbackText  {
+                Text(feedback.title)
+                    .bold()
+                    .foregroundStyle(feedback.isError == false ? .green : .red)
+            } else {
+                Text("")
+                    .foregroundStyle(.clear)
+            }
             Spacer()
             if !vm.didTapDrawBtn {
                 Group {
@@ -35,8 +43,6 @@ struct MainPage:View {
                                 .frame(minWidth: 100, maxWidth: 200)
                             Text("Image isnt selected")
                         }
-                        
-                            
                     }
                 }
             } else {
@@ -49,9 +55,8 @@ struct MainPage:View {
                             .foregroundStyle(.red)
                             .background(Color.white.opacity(0.5))
                             .position(x: 150, y: 150)
-                           
                     }
-
+                    
                 } else {
                     Text("NO IMAGE")
                 }
@@ -66,20 +71,18 @@ struct MainPage:View {
                 HStack {
                     ForEach(vm.filtersArray) { filter in
                         
-                            Button {
-                                vm.setFilter(filter.filter)
-                                vm.getImage()
-                            } label: {
-                                VStack {
-                                    Text(filter.name)
-                                        .bold()
-                                        .foregroundStyle(.white)
-                                        .withDefaultButtonFormatting(disabled: .constant(false))
-                                }
-                                .foregroundStyle(.black)
+                        Button {
+                            vm.setFilter(filter.filter)
+                            vm.getImage()
+                        } label: {
+                            VStack {
+                                Text(filter.name)
+                                    .bold()
+                                    .foregroundStyle(.white)
+                                    .withDefaultButtonFormatting(disabled: .constant(false))
                             }
-
-                        
+                            .foregroundStyle(.black)
+                        }
                     }
                 }
             }
@@ -92,10 +95,11 @@ struct MainPage:View {
                     withAnimation {
                         vm.didTapFiltersBtn.toggle()
                     }
-//                    vm.getImage()
+                    //                    vm.getImage()
                 }
                 PhotoEditButton(systemImage: "square.and.arrow.down", title: "save", disable: .constant(false)) {
                     print("save")
+                    vm.saveImage()
                 }
                 PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
                     print("share")
@@ -110,21 +114,11 @@ struct MainPage:View {
                     .foregroundStyle(.white)
                     .bold()
                     .withDefaultButtonFormatting(disabled: .constant(false))
-                    
+                
             }
-
+            
             
         }
-//        .onChange(of: vm.didTapDrawBtn) { oldValue, newValue in
-//            if oldValue == false {
-//                vm.selection = vm.renderFinalImage(
-//                    baseImage: vm.selection!,
-//                    canvasView: vm.canvasView,
-//                    text: "TEST",
-//                    at: CGPoint(x: 150, y: 150)
-//                )
-//            }
-//        }
         .padding()
     }
 }

@@ -13,6 +13,7 @@ import PencilKit
 
 class MainPageViewModel: ObservableObject {
     @Published var selection: UIImage?
+    @Published var userFeedbackText: ImageSavingFeedback?
     let cropOptions = CroppedPhotosPickerOptions(doneButtonTitle: "select", doneButtonColor: .orange)
     
     var filtersArray: [Filter] = [
@@ -30,7 +31,6 @@ class MainPageViewModel: ObservableObject {
     
     @MainActor
     func applyProccesing() {
-//        currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)
         let inputKeys = currentFilter.inputKeys
         if inputKeys.contains(kCIInputIntensityKey) {
             currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey)
@@ -57,6 +57,20 @@ class MainPageViewModel: ObservableObject {
             let beginImage = CIImage(image: selectedImage)
             currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
             await applyProccesing()
+        }
+    }
+    
+    func saveImage() {
+        guard let imageForSaving = selection else {return}
+        let imageSaver = ImageSaver()
+        withAnimation(.easeInOut) {
+            userFeedbackText = imageSaver.writeToPhotoAlbum(image: imageForSaving)
+            let item = DispatchWorkItem { [self] in
+                withAnimation {
+                    userFeedbackText = nil
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: item)
         }
     }
     
