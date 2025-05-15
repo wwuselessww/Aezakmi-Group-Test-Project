@@ -14,51 +14,57 @@ struct MainPage:View {
     @StateObject var vm = MainPageViewModel()
     
     var body: some View {
-//        VStack {
-//            if let image = vm.image {
-//                image
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(minWidth: 50, maxWidth: 300, minHeight: 50, maxHeight: 300)
-//            } else {
-//                Image(systemName: "photo.artframe")
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(minWidth: 50, maxWidth: 100)
-//            }
-//            PhotosPicker("Select Photo For Edit", selection: $vm.selectedPhoto, matching: .images)
-//                .foregroundStyle(.white)
-//                .bold()
-//                .withDefaultButtonFormatting(disabled: .constant(false))
-//
-//        }
-//        .padding(.horizontal)
-//        .onChange(of: vm.selectedPhoto) { oldValue, newValue in
-//            Task {
-//                do {
-//                    let loaded = try await vm.selectedPhoto?.loadTransferable(type: Image.self)
-//                        vm.image = loaded
-//                } catch {
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        }
+
         VStack {
-            if let selection = vm.selection {
-                Image(uiImage: selection)
-                    .resizable()
-                    .scaledToFit()
+            Spacer()
+            Group {
+                if let selection = vm.selection {
+                    Image(uiImage: selection)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(minWidth: 200, maxWidth: .infinity)
+                } else {
+                    VStack {
+                        Image(systemName: "photo.artframe")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(minWidth: 100, maxWidth: 200)
+                        Text("Image isnt selected")
+                    }
+                        
+                }
+            }
+            
+            Spacer()
+            HStack(spacing: 30) {
+                PhotoEditButton(systemImage: "pencil", title: "draw", disable: .constant(false)) {
+                    print("draw")
+                }
+                PhotoEditButton(systemImage: "camera.filters", title: "filtes", disable: .constant(false)) {
+                    print("filtes")
+                }
+                PhotoEditButton(systemImage: "square.and.arrow.down", title: "save", disable: .constant(false)) {
+                    print("save")
+                }
+                PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
+                    print("share")
+                }
             }
             CroppedPhotosPicker(style: .default, options: vm.cropOptions, selection: $vm.selection) { rect in
                 print("did Crop to rect \(rect)")
             } didCancel: {
                 print("did cancel")
             } label: {
-                Text("Picke and crop Image")
+                Text("Pick and crop Image")
+                    .foregroundStyle(.white)
+                    .bold()
+                    .withDefaultButtonFormatting(disabled: .constant(false))
+                    
             }
 
             
         }
+        .padding()
     }
 }
 #Preview {
