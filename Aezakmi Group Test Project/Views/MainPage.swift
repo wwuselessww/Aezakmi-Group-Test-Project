@@ -41,20 +41,22 @@ struct MainPage:View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(minWidth: 100, maxWidth: 200)
-                            Text("Image isnt selected")
+                            Text("Image isn't selected")
+                                .bold()
                         }
                     }
                 }
             } else {
                 if let image = vm.selection {
                     ZStack {
+//                        CanvasView(canvasView: $vm.canvasView, backgroundImage: image)
+//                            .shadow(radius: 20)
+//                        Text("TEXT HERE")
+//                            .bold()
+//                            .foregroundStyle(.red)
+//                            .background(Color.white.opacity(0.5))
+//                            .position(x: 150, y: 150)
                         CanvasView(canvasView: $vm.canvasView, backgroundImage: image)
-                            .shadow(radius: 20)
-                        Text("TEXT HERE")
-                            .bold()
-                            .foregroundStyle(.red)
-                            .background(Color.white.opacity(0.5))
-                            .position(x: 150, y: 150)
                     }
                     
                 } else {
@@ -119,6 +121,11 @@ struct MainPage:View {
             
             
         }
+        .onChange(of: vm.didTapDrawBtn, { oldValue, newValue in
+            if newValue == false {
+                vm.draw()
+            }
+        })
         .padding()
     }
 }

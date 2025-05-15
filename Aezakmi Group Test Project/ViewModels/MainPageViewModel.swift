@@ -12,22 +12,23 @@ import CoreImage.CIFilterBuiltins
 import PencilKit
 
 class MainPageViewModel: ObservableObject {
-    @Published var selection: UIImage?
-    @Published var userFeedbackText: ImageSavingFeedback?
-    let cropOptions = CroppedPhotosPickerOptions(doneButtonTitle: "select", doneButtonColor: .orange)
     
     var filtersArray: [Filter] = [
         .init(name: "crystallize", filter: CIFilter.crystallize()),
         .init(name: "sepia tone", filter: CIFilter.sepiaTone()),
         .init(name: "vignette", filter: CIFilter.vignette())
     ]
+    let cropOptions = CroppedPhotosPickerOptions(doneButtonTitle: "select", doneButtonColor: .orange)
     
+    @Published var selection: UIImage?
+    @Published var userFeedbackText: ImageSavingFeedback?
     @Published var didTapFiltersBtn: Bool = false
     @Published var didTapDrawBtn: Bool = false
     @Published var canvasView = PKCanvasView()
     @Published var currentFilter: CIFilter = CIFilter.sepiaTone()
-    let context = CIContext()
     @Published var filterIntensity = 0.0
+    
+    let context = CIContext()
     
     @MainActor
     func applyProccesing() {
@@ -71,6 +72,29 @@ class MainPageViewModel: ObservableObject {
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: item)
+        }
+    }
+    @MainActor
+    func draw() {
+        guard let baseImage = selection else { return }
+
+        let size = baseImage.size
+        UIGraphicsBeginImageContextWithOptions(size, false, baseImage.scale)
+
+        // Draw original image
+        baseImage.draw(in: CGRect(origin: .zero, size: size))
+
+        // Draw the drawing
+        let drawingImage = canvasView.drawing.image(from: CGRect(origin: .zero, size: size), scale: baseImage.scale)
+        drawingImage.draw(in: CGRect(origin: .zero, size: size))
+
+        let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        if let combinedImage {
+//            Task {
+                selection = combinedImage
+//            }
         }
     }
     
