@@ -13,10 +13,11 @@ struct ContentView: View {
     @ObservedObject var vm = AppViewModel()
     var body: some View {
         ZStack {
-            if vm.isUserLoggedIn {
+            if vm.isCheckingAuth {
+                ProgressView("Loading...")
+            } else if vm.isUserLoggedIn {
                 MainPage()
                     .environmentObject(vm)
-                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             } else {
                 AuthenticationPage()
                     .environmentObject(vm)

@@ -119,9 +119,6 @@ struct MainPage:View {
                     vm.saveImage()
                 }
                 
-//                PhotoEditButton(systemImage: "square.and.arrow.up", title: "share", disable: .constant(false)) {
-//                    print("share")
-//                }
                 if let image = vm.selection {
                     ShareLink(item: Image(uiImage: image), preview: SharePreview("Eddited Image", image: Image(uiImage: image))) {
                         VStack {

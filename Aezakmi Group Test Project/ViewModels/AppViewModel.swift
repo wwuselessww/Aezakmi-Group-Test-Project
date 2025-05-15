@@ -11,10 +11,12 @@ import FirebaseAuth
 class AppViewModel: ObservableObject {
     @Published var isUserLoggedIn: Bool = false
     @Published var loginError: String?
+    @Published var isCheckingAuth: Bool = true
     
     init() {
         Auth.auth().addStateDidChangeListener { _, user in
-            self.isUserLoggedIn = (user != nil)
+            self.isUserLoggedIn = user != nil
+            self.isCheckingAuth = false
         }
     }
     
